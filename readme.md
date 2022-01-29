@@ -3,6 +3,8 @@
 
 ```bash
 lsb_release -a
+dotnet --list-sdks
+dotnet --version
 ```
 
 # setup .net envirement (@ ubuntu 20.04)
@@ -26,8 +28,35 @@ sudo apt-get update; \
 ```bash
 dotnet new web -o PizzaStore -f net6.0
 cd PizzaStore/
+dotnet new gitignore
+```
 
-# Install Swagger Packages
+# Configure Swagger
+
+Install Swagger Packages
+```bash
 dotnet add package Swashbuckle.AspNetCore
+```
 
+edit Program.cs
+```csharp
+// import
+using Microsoft.OpenApi.Models;
+
+// add Middleware
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+  {
+      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Todo API", Description = "Keep track of your tasks", Version = "v1" });
+  });
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+  {
+     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API V1");
+  });
+```
+
+run
+```bash
+dotnet run
 ```
