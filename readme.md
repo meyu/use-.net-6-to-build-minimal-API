@@ -1,25 +1,60 @@
-
-# show os version
-
-```bash
-lsb_release -a
-dotnet --list-sdks
-dotnet --version
-```
-
-# setup .net envirement (@ ubuntu 20.04)
+# setup .net envirement
 [source](https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu)
 
+@ ubuntu 20.04 remotely
+
 ```bash
-# add .net package repository
+# show os version
+lsb_release -a
+
+# add dotnet packages
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
-# Install the SDK
+
+# add vscode packages
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+rm -f packages.microsoft.gpg
+
+# Install dotnet SDK & vscode
 sudo apt-get update; \
   sudo apt-get install -y apt-transport-https && \
   sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-6.0
+  sudo apt-get install -y dotnet-sdk-6.0 \
+  sudo apt install -y code
+```
+
+@ macos
+
+```bash
+# install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# install code
+brew install --cask visual-studio-code
+
+# install git
+brew install git
+
+# install dotnet sdk
+brew install --cask dotnet-sdk
+
+```
+
+init git
+
+```bash
+git config --global user.name "username"
+git config --global user.email username@example.com
+```
+
+show dotnet version
+
+```bash
+dotnet --list-sdks
+dotnet --version
 ```
 
 # init project
@@ -58,5 +93,5 @@ app.UseSwaggerUI(c =>
 
 run
 ```bash
-dotnet run
+dotnet watch
 ```
