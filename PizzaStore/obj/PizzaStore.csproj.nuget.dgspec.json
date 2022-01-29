@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/workspace/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj": {}
+    "/Users/guy/Desktop/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj": {}
   },
   "projects": {
-    "/workspace/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj": {
+    "/Users/guy/Desktop/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/workspace/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj",
+        "projectUniqueName": "/Users/guy/Desktop/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj",
         "projectName": "PizzaStore",
-        "projectPath": "/workspace/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj",
-        "packagesPath": "/home/gitpod/.nuget/packages/",
-        "outputPath": "/workspace/use-.net-6-to-build-minimal-API/PizzaStore/obj/",
+        "projectPath": "/Users/guy/Desktop/use-.net-6-to-build-minimal-API/PizzaStore/PizzaStore.csproj",
+        "packagesPath": "/Users/guy/.nuget/packages/",
+        "outputPath": "/Users/guy/Desktop/use-.net-6-to-build-minimal-API/PizzaStore/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/gitpod/.nuget/NuGet/NuGet.Config"
+          "/Users/guy/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -61,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
         }
       }
     }
