@@ -74,7 +74,7 @@ dotnet add package Swashbuckle.AspNetCore
 ```
 
 edit Program.cs
-```csharp
+```c#
 // import
 using Microsoft.OpenApi.Models;
 
@@ -94,4 +94,72 @@ app.UseSwaggerUI(c =>
 run
 ```bash
 dotnet watch
+```
+
+# Use EF Core to read data
+
+add EF Core (In Memory) package
+
+```bash
+dotnet add package Microsoft.EntityFrameworkCore.InMemory
+dotnet list package
+```
+
+build data model `Pizza.cs`
+
+```c#
+using Microsoft.EntityFrameworkCore;
+namespace PizzaStore.Models
+{
+    public class Pizza
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+    }
+    class PizzaDb : DbContext
+    {
+        public PizzaDb(DbContextOptions options) : base(options) { }
+        public DbSet<Pizza>? Pizzas { get; set; }
+    }
+}
+```
+
+add service in `Program.cs`
+
+```c#
+builder.Services.AddDbContext<PizzaDb>(options => options.UseInMemoryDatabase("items"));
+```
+
+add CRUD routes in `Program.cs`
+
+```c#
+pp.MapGet("/pizzas", async (PizzaDb db) => await db.Pizzas.ToListAsync());
+app.MapPost("/pizza", async (PizzaDb db, Pizza pizza) =>
+{
+    await db.Pizzas.AddAsync(pizza);
+    await db.SaveChangesAsync();
+    return Results.Created($"/pizza/{pizza.Id}", pizza);
+});
+app.MapGet("/pizza/{id}", async (PizzaDb db, int id) => await db.Pizzas.FindAsync(id));
+app.MapPut("/pizza/{id}", async (PizzaDb db, Pizza updatepizza, int id) =>
+{
+    var pizza = await db.Pizzas.FindAsync(id);
+    if (pizza is null) return Results.NotFound();
+    pizza.Name = updatepizza.Name;
+    pizza.Description = updatepizza.Description;
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+app.MapDelete("/pizza/{id}", async (PizzaDb db, int id) =>
+{
+  var pizza = await db.Pizzas.FindAsync(id);
+  if (pizza is null)
+  {
+    return Results.NotFound();
+  }
+  db.Pizzas.Remove(pizza);
+  await db.SaveChangesAsync();
+  return Results.Ok();
+});
 ```
